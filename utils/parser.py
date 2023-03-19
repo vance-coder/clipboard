@@ -1,4 +1,8 @@
-from typing import Optional
+import struct
+from typing import Optional, Union
+from datetime import datetime
+from dateutil.parser import parse as dateutil_parse
+
 from urllib.parse import urlparse, unquote, parse_qs, unquote_plus
 
 
@@ -12,3 +16,16 @@ def parse_url(stg: str) -> dict:
 
     return ret
 
+
+def date_parse(stg: str) -> Optional[datetime]:
+    try:
+        return dateutil_parse(stg)
+    except Exception as e:
+        return
+
+
+def to_list(stg: str) -> Optional[list]:
+    if '\n' in stg:
+        return list(map(str.strip, stg.split('\n')))
+
+    return
